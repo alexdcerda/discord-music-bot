@@ -11,7 +11,7 @@ def run_bot():
     TOKEN = os.getenv('DISCORD_TOKEN')
     intents = discord.Intents.default()
     intents.message_content = True
-    client = commands.Bot(command_prefix="/", intents=intents)
+    client = commands.Bot(command_prefix="!", intents=intents)
 
     queues = {}
     voice_clients = {}
@@ -64,6 +64,7 @@ def run_bot():
         except Exception as e:
             print(f"error with loading YT song: {e}")
 
+    
     @client.command(name="clear_queue")
     async def clear_queue(ctx):
         if ctx.guild.id in queues:
@@ -115,6 +116,7 @@ def run_bot():
         else:
             await ctx.send("No song in queue to skip to")
 
+   
     @client.command(name="socials")
     async def socials(ctx):
         embed =discord.Embed(
@@ -142,7 +144,7 @@ def run_bot():
         )
         embed.add_field(
             name="X/Twitter",
-            value="[Click x](https://x.com/kennymendoza__?s=21)",
+            value="[Click X/Twitter](https://x.com/kennymendoza__?s=21)",
             inline=False
         )
         await ctx.send(embed=embed)
