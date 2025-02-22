@@ -1,10 +1,14 @@
 import discord
 from discord.ext import commands
-import os
+import os, shutil
 import asyncio
 import yt_dlp
 from dotenv import load_dotenv
 import urllib.parse, urllib.request, re
+import random
+from google_images_download import google_images_download
+
+
 
 def run_bot():
     load_dotenv()
@@ -65,7 +69,7 @@ def run_bot():
             print(f"error with loading YT song: {e}")
 
     
-    @client.command(name="clear_queue")
+    @client.command(name="clear_Q")
     async def clear_queue(ctx):
         if ctx.guild.id in queues:
             queues[ctx.guild.id].clear()
@@ -96,7 +100,7 @@ def run_bot():
         except Exception as e:
             print(f"error with /stop command: {e}")
 
-    @client.command(name="queue")
+    @client.command(name="Q")
     async def queue(ctx, *, url):
         if ctx.guild.id not in queues:
             queues[ctx.guild.id] = []
