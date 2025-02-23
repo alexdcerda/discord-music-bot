@@ -9,7 +9,6 @@ cffi==1.17.1
 discord==2.3.2
 discord.py==2.4.0
 frozenlist==1.5.0
-google_images_download==2.8.0
 h11==0.14.0
 idna==3.10
 multidict==6.1.0

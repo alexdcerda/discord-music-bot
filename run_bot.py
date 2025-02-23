@@ -1,12 +1,11 @@
 import discord
 from discord.ext import commands
-import os, shutil
+import os, random, tempfile
 import asyncio
 import yt_dlp
 from dotenv import load_dotenv
 import urllib.parse, urllib.request, re
-import random
-from google_images_download import google_images_download
+from icrawler.builtin import GoogleImageCrawler
 
 
 
@@ -153,7 +152,29 @@ def run_bot():
         )
         await ctx.send(embed=embed)
 
+
+    @client.command(name='image')
+    async def image(ctx, *, query: str):
+    
+        with tempfile.TemporaryDirectory() as tempdir:
+            google_crawler = GoogleImageCrawler(storage={'root_dir': tempdir})
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(None, lambda: google_crawler.crawl(keyword=query, max_num=3))
+
+            downloaded_files = os.listdir(tempdir)
+
+            if downloaded_files:
+                image_file = random.choice(downloaded_files)
+                image_path = os.path.join(tempdir, image_file)
+                file = discord.File(image_path, filename=image_file)
+                embed = discord.Embed(title=f"Image result for: {query}")
+                embed.set_image(url=f"attachment://{image_file}")
+                await ctx.send(embed=embed, file=file)
+            else:
+                await ctx.send("No image was found for that search")
+
     client.run(TOKEN)
+   
 
 
 
