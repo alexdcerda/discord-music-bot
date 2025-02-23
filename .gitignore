@@ -3,7 +3,8 @@ venv
 .history
 __pycache__
 python_bot/run_bot.py
-__pycache__
-googleimage_bot.py
+python_bot/googleimage_bot.py
+
+
 
 
