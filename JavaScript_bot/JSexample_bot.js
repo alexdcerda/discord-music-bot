@@ -1,7 +1,8 @@
 import dotenv from 'dotenv'
-import { Client, GatewayIntentBits } from 'discord.js'
+import { Client, GatewayIntentBits, VoiceChannel } from 'discord.js'
 import ytdl from 'ytdl-core'
-import { joinVoiceChannel, createAudioPlayer, createAudioResource } from '@discordjs/voice';
+import { joinVoiceChannel, createAudioPlayer, createAudioResource,
+   NoSubscriberBehavior, AudioPlayerStatus } from '@discordjs/voice';
 import { ytSearch } from 'yt-search'
 
 
@@ -13,6 +14,7 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.MessageContent
   ]
 })
 
@@ -33,7 +35,19 @@ client.on('messageCreate', async (message) => {
   const command = args.shift().toLowerCase()
 
   if (command === 'play') {
+    const voiceChannel = message.member?.voice?.channel
+    if (!voiceChannel) {
+      message.channel.send('You need to be in a voice channel to play music')
+      return
+    }
+    if (args.length === 0) {
+      message.channel.send('You need to provide a song name or URL')
+      return
+    }
+    const query = args.join(' ')
 
+
+    ////////////////////////// continue from here
   }
 })
 
